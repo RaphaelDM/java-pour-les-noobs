@@ -3,7 +3,7 @@ public class Book {
     private String title;
     private String author;
     private int year;
-    private final String ISBN; // Changed to String and made final for immutability
+    private final String ISBN; 
 
     // Constructor
     public Book(String title, String author, int year, String ISBN) {
@@ -35,19 +35,19 @@ public class Book {
 
     // Override equals() and hashCode()
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
+    public boolean equals(Object o) { // Deux livres sont considérés égaux s'ils ont le même ISBN
+        if (this == o) return true; 
+        if (o == null || getClass() != o.getClass()) return false; // Vérifier que l'objet est du même type
+        Book book = (Book) o; // Comparer les ISBN
         return ISBN.equals(book.ISBN);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // Utiliser uniquement l'ISBN pour le hashCode, car c'est un identifiant unique
         return ISBN.hashCode();
     }
 
-    // Override toString()
+    // Override toString() : de manière à afficher les détails du livre de manière lisible
     @Override
     public String toString() {
         return "Book{" +

@@ -1,4 +1,4 @@
-package org.example.service;
+package ort.lyon.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Set;
 
-import org.example.domain.Book;
-import org.example.exceptions.BookNotFoundException;
-import org.example.exceptions.DuplicateBookException;
+import ort.lyon.demo.domain.Book;
+import ort.lyon.demo.service.Library;
+import ort.lyon.demo.exceptions.BookNotFoundException;
+import ort.lyon.demo.exceptions.DuplicateBookException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

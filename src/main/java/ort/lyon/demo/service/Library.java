@@ -1,8 +1,8 @@
-package org.example.service;
+package ort.lyon.demo.service;
 
-import org.example.domain.Book;
-import org.example.exceptions.BookNotFoundException;
-import org.example.exceptions.DuplicateBookException;
+import ort.lyon.demo.domain.Book;
+import ort.lyon.demo.exceptions.BookNotFoundException;
+import ort.lyon.demo.exceptions.DuplicateBookException;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;

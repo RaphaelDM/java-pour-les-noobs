@@ -1,8 +1,8 @@
 package org.example.service;
 
 import org.example.domain.Book;
-import org.example.exception.BookNotFoundException;
-import org.example.exception.DuplicateBookException;
+import org.example.exceptions.BookNotFoundException;
+import org.example.exceptions.DuplicateBookException;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;

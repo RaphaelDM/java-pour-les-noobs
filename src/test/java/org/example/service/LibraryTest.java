@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 
 import org.example.domain.Book;
-import org.example.exception.BookNotFoundException;
-import org.example.exception.DuplicateBookException;
+import org.example.exceptions.BookNotFoundException;
+import org.example.exceptions.DuplicateBookException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

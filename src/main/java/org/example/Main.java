@@ -4,7 +4,7 @@ import org.example.domain.Book;
 import org.example.service.Library;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Library library = new Library();
         var cleanCodeBook = new Book(1, "Clean Code", "Robert Martin", 2008);
         var effectiveJavaBook = new Book(2, "Effective Java", "Joshua Bloch", 2018);

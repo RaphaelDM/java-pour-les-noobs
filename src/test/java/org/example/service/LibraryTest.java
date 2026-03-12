@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Set;
 
 import org.example.domain.Book;
@@ -124,6 +125,39 @@ class LibraryTest {
         assertThrows(IllegalArgumentException.class, () -> library.removeBook(null));
     }
 
+    @Test
+    void shouldReturnBooksSortedByTitleAlphabetically() {
+        Library library = createLibrary();
+
+        List<Book> books = library.getBooksSortedByTitle();
+
+        assertEquals("Clean Architecture", books.get(0).getTitle());
+        assertEquals("Clean Code", books.get(1).getTitle());
+        assertEquals("Effective Java", books.get(2).getTitle());
+    }
+
+    @Test
+    void shouldReturnBooksSortedByAuthorThenTitle() {
+        Library library = createLibrary();
+
+        List<Book> books = library.getBooksSortedByAuthor();
+
+        // Joshua Bloch avant Robert Martin (alphabétique)
+        assertEquals("Joshua Bloch", books.get(0).getAuthor());
+        assertEquals("Robert Martin", books.get(1).getAuthor());
+        // pour Robert Martin : Clean Architecture avant Clean Code
+        assertEquals("Clean Architecture", books.get(1).getTitle());
+        assertEquals("Clean Code", books.get(2).getTitle());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenLibraryIsEmpty() {
+        Library library = new Library();
+
+        assertTrue(library.getBooksSortedByTitle().isEmpty());
+        assertTrue(library.getBooksSortedByAuthor().isEmpty());
+    }
+    // Méthode utilitaire pour créer une bibliothèque pré-remplie de livres pour les tests
     private static Library createLibrary() {
         Library library = new Library();
         library.addBook(new Book(1, "Clean Code", "Robert Martin", 2008));

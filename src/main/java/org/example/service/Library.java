@@ -4,14 +4,16 @@ import org.example.domain.Book;
 import org.example.exceptions.BookNotFoundException;
 import org.example.exceptions.DuplicateBookException;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Library {
 
-    private final Map<Integer, Book> booksByIsbn = new LinkedHashMap<>();
+    private final Map<Integer, Book> booksByIsbn = new LinkedHashMap<>(); // Map pour stocker les livres par ISBN 
 
     public void addBook(Book book) {
         requireArgument(book, "book");
@@ -37,42 +39,31 @@ public class Library {
         }
     }
 
-    public Set<Book> getBooksFromAuthor(String author) {
+    public Set<Book> getBooksFromAuthor(String author) { // Récupère les livres d'un auteur spécifique
         requireArgument(author, "author");
 
-        Set<Book> result = new LinkedHashSet<>();
-        for (Book book : booksByIsbn.values()) {
-            if (book.getAuthor().equals(author)) {
-                result.add(book);
-            }
-        }
-        return result;
+        return booksByIsbn.values().stream()
+                .filter(book -> book.getAuthor().equals(author))
+                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
     }
 
-    public Set<Book> getBooksByTitle(String title) {
+    public Set<Book> getBooksByTitle(String title) { // Récupère les livres dont le titre contient une chaîne spécifique
         requireArgument(title, "title");
 
-        Set<Book> result = new LinkedHashSet<>();
         String needle = title.toLowerCase();
 
-        for (Book book : booksByIsbn.values()) {
-            if (book.getTitle().toLowerCase().contains(needle)) {
-                result.add(book);
-            }
-        }
-        return result;
+        return booksByIsbn.values().stream()
+                .filter(book -> book.getTitle().toLowerCase().contains(needle))
+                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
     }
 
     public Book findBookByTitle(String title) {
         requireArgument(title, "title");
 
-        for (Book book : booksByIsbn.values()) {
-            if (book.getTitle().equals(title)) {
-                return book;
-            }
-        }
-
-        throw new BookNotFoundException("No book found with title '" + title + "'");
+        return booksByIsbn.values().stream()
+                .filter(book -> book.getTitle().equals(title))
+                .findFirst()
+                .orElseThrow(() -> new BookNotFoundException("No book found with title '" + title + "'"));
     }
 
     public Book getBookByIsbn(int ibsn) {
@@ -83,6 +74,19 @@ public class Library {
         }
 
         throw new BookNotFoundException("No book found with ISBN " + ibsn);
+    }
+
+    // Méthodes pour récupérer les livres triés par titre ou par auteur
+    public List<Book> getBooksSortedByTitle() {
+        return booksByIsbn.values().stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .collect(Collectors.toList());
+    }
+
+    public List<Book> getBooksSortedByAuthor() {
+        return booksByIsbn.values().stream()
+                .sorted(Comparator.comparing(Book::getAuthor).thenComparing(Book::getTitle))
+                .collect(Collectors.toList());
     }
 
     private static <T> T requireArgument(T value, String argumentName) {

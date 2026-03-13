@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package ort.lyon.demo.domain.exception;
 
 public class LibraryException extends RuntimeException {
 

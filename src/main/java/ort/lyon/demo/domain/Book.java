@@ -1,4 +1,4 @@
-package org.example.domain;
+package ort.lyon.demo.domain;
 
 import java.util.Objects;
 

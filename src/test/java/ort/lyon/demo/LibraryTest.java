@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import ort.lyon.demo.domain.Book;
+import ort.lyon.demo.domain.exception.BookNotFoundException;
+import ort.lyon.demo.domain.exception.DuplicateBookException;
 import ort.lyon.demo.service.Library;
-import ort.lyon.demo.exceptions.BookNotFoundException;
-import ort.lyon.demo.exceptions.DuplicateBookException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

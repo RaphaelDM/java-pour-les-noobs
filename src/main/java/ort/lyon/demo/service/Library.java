@@ -1,99 +1,67 @@
 package ort.lyon.demo.service;
 
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.exceptions.BookNotFoundException;
-import ort.lyon.demo.exceptions.DuplicateBookException;
+import ort.lyon.demo.domain.BookRepository;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Library {
 
-    private final Map<Integer, Book> booksByIsbn = new LinkedHashMap<>(); // Map pour stocker les livres par ISBN 
+    private final BookService bookService;
+
+    public Library() {
+        this(new BookService(new BookRepository()));
+    }
+
+    Library(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     public void addBook(Book book) {
-        requireArgument(book, "book");
-
-        if (booksByIsbn.containsKey(book.getIbsn())) {
-            throw new DuplicateBookException("A book with ISBN " + book.getIbsn() + " already exists");
-        }
-
-        booksByIsbn.put(book.getIbsn(), book);
+        bookService.addBook(book);
     }
 
     public void displayBooks() {
-        for (Book book : booksByIsbn.values()) {
+        for (Book book : bookService.getBooksSortedByIsbn()) {
             System.out.println(book);
         }
     }
 
     public void removeBook(Book book) {
-        requireArgument(book, "book");
-
-        if (booksByIsbn.remove(book.getIbsn()) == null) {
-            throw new BookNotFoundException("No book found with ISBN " + book.getIbsn());
-        }
+        bookService.removeBook(book);
     }
 
     public Set<Book> getBooksFromAuthor(String author) { // Récupère les livres d'un auteur spécifique
-        requireArgument(author, "author");
-
-        return booksByIsbn.values().stream()
-                .filter(book -> book.getAuthor().equals(author))
-                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
+        return bookService.getBooksFromAuthor(author);
     }
 
     public Set<Book> getBooksByTitle(String title) { // Récupère les livres dont le titre contient une chaîne spécifique
-        requireArgument(title, "title");
-
-        String needle = title.toLowerCase();
-
-        return booksByIsbn.values().stream()
-                .filter(book -> book.getTitle().toLowerCase().contains(needle))
-                .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
+        return bookService.getBooksByTitle(title);
     }
 
     public Book findBookByTitle(String title) {
-        requireArgument(title, "title");
-
-        return booksByIsbn.values().stream()
-                .filter(book -> book.getTitle().equals(title))
-                .findFirst()
-                .orElseThrow(() -> new BookNotFoundException("No book found with title '" + title + "'"));
+        return bookService.findBookByTitle(title);
     }
 
     public Book getBookByIsbn(int ibsn) {
-        Book book = booksByIsbn.get(ibsn);
-
-        if (book != null) {
-            return book;
-        }
-
-        throw new BookNotFoundException("No book found with ISBN " + ibsn);
+        return bookService.getBookByIsbn(ibsn);
     }
 
     // Méthodes pour récupérer les livres triés par titre ou par auteur
     public List<Book> getBooksSortedByTitle() {
-        return booksByIsbn.values().stream()
-                .sorted(Comparator.comparing(Book::getTitle))
-                .collect(Collectors.toList());
+        return bookService.getBooksSortedByTitle();
     }
 
     public List<Book> getBooksSortedByAuthor() {
-        return booksByIsbn.values().stream()
-                .sorted(Comparator.comparing(Book::getAuthor).thenComparing(Book::getTitle))
-                .collect(Collectors.toList());
+        return bookService.getBooksSortedByAuthor();
     }
 
-    private static <T> T requireArgument(T value, String argumentName) {
-        if (value == null) {
-            throw new IllegalArgumentException(argumentName + " must not be null");
-        }
+    public List<Book> getBooksSortedByIsbn() {
+        return bookService.getBooksSortedByIsbn();
+    }
 
-        return value;
+    public void removeBookByIsbn(int isbn) {
+        bookService.removeBookByIsbn(isbn);
     }
 }

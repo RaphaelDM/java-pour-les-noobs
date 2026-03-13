@@ -1,4 +1,4 @@
-package ort.lyon.demo.exceptions;
+package ort.lyon.demo.domain.exception;
 
 public class BookNotFoundException extends LibraryException {
 

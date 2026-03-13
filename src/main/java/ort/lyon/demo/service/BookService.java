@@ -20,7 +20,6 @@ public class BookService {
     public BookService(BookRepository repository) {
         this.repository = repository;
     }
-
     public void addBook(Book book) {
         requireArgument(book, "book");
 
@@ -30,7 +29,7 @@ public class BookService {
 
         repository.save(book);
     }
-
+    
     public void removeBookByIsbn(int isbn) {
         if (!repository.deleteByIsbn(isbn)) {
             throw new BookNotFoundException("No book found with ISBN " + isbn);

@@ -19,6 +19,8 @@ public interface BookUseCase {
 
     Book getBookByIsbn(int isbn);
 
+    Book updateBook(int isbn, Book updatedBook);
+
     Book findBookByTitle(String title);
 
     Set<Book> getBooksFromAuthor(String author);

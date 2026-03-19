@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{components/head :: head('Bibliothèque')}"></head>
+<body>
+
+<header th:replace="~{components/header :: header('Bibliothèque')}"></header>
+
+<main>
+
+    <!-- Formulaire d'ajout -->
+    <div class="card">
+        <div class="card-header">➕ Ajouter un livre</div>
+        <form th:action="@{/ui/books}" method="post" th:object="${newBook}">
+            <div class="form-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ibsn">ISBN</label>
+                        <input type="number" id="ibsn" th:field="*{ibsn}"
+                               placeholder="Ex : 9780132350884"
+                               min="1" step="1" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Titre</label>
+                        <input type="text" id="title" th:field="*{title}"
+                               placeholder="Ex : Clean Code"
+                               minlength="1" maxlength="200" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="author">Auteur</label>
+                        <input type="text" id="author" th:field="*{author}"
+                               placeholder="Ex : Robert C. Martin"
+                               minlength="1" maxlength="100" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Année de parution</label>
+                        <input type="number" id="year" th:field="*{year}"
+                               placeholder="Ex : 2008"
+                               min="1000" max="2026" required />
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button class="btn-add" type="submit">➕ Ajouter le livre</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Liste des livres -->
+    <div class="card">
+        <div class="card-header">📖 Catalogue</div>
+        <div class="stats" th:text="${books.size()} + ' livre(s) disponible(s)'"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Année</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book : ${books}">
+                    <td><span class="badge-isbn" th:text="${book.ibsn}"></span></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td><span class="badge-year" th:text="${book.year}"></span></td>
+                    <td>
+                        <form style="display:inline" th:action="@{/ui/books/{isbn}/delete(isbn=${book.ibsn})}" method="post">
+                            <button class="btn-delete" type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr class="empty-row" th:if="${#lists.isEmpty(books)}">
+                    <td colspan="5">Aucun livre pour l'instant — ajoutez-en un ! 👆</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</main>
+
+<footer th:replace="~{components/footer :: footer}"></footer>
+
+</body>
+</html>

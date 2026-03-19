@@ -63,6 +63,17 @@ public class BookService implements BookUseCase {
                 .orElseThrow(() -> new BookNotFoundException("No book found with ISBN " + isbn));
     }
 
+    public Book updateBook(int isbn, Book updatedBook) {
+        requireArgument(updatedBook, "updatedBook");
+        Book existing = repository.findByIbsn(isbn)
+                .orElseThrow(() -> new BookNotFoundException("No book found with ISBN " + isbn));
+        existing.setTitle(updatedBook.getTitle());
+        existing.setAuthor(updatedBook.getAuthor());
+        existing.setYear(updatedBook.getYear());
+        repository.save(existing);
+        return existing;
+    }
+
     public Book findBookByTitle(String title) {
         requireArgument(title, "title");
 

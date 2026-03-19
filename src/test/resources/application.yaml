@@ -1,11 +1,9 @@
 spring:
-  application:
-    name: demo
   datasource:
-    url: jdbc:postgresql://localhost:5432/booksdb
-    driver-class-name: org.postgresql.Driver
-    username: books
-    password: books
+    url: jdbc:h2:mem:booksdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: validate

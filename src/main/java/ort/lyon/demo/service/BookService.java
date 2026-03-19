@@ -1,11 +1,12 @@
 package ort.lyon.demo.service;
 
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.domain.BookRepository;
+import ort.lyon.demo.domain.port.BookRepositoryPort;
 import ort.lyon.demo.domain.exception.BookNotFoundException;
 import ort.lyon.demo.domain.exception.DuplicateBookException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,17 +14,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BookService {
 
-    private final BookRepository repository;
+    private final BookRepositoryPort repository;
 
-    public BookService(BookRepository repository) {
+    public BookService(BookRepositoryPort repository) {
         this.repository = repository;
     }
     public void addBook(Book book) {
         requireArgument(book, "book");
 
-        if (repository.findByIsbn(book.getIbsn()).isPresent()) {
+        if (repository.existsByIbsn(book.getIbsn())) {
             throw new DuplicateBookException("A book with ISBN " + book.getIbsn() + " already exists");
         }
 
@@ -31,7 +33,7 @@ public class BookService {
     }
     
     public void removeBookByIsbn(int isbn) {
-        if (!repository.deleteByIsbn(isbn)) {
+        if (!repository.deleteByIbsn(isbn)) {
             throw new BookNotFoundException("No book found with ISBN " + isbn);
         }
     }
@@ -55,7 +57,7 @@ public class BookService {
     }
 
     public Book getBookByIsbn(int isbn) {
-        return repository.findByIsbn(isbn)
+        return repository.findByIbsn(isbn)
                 .orElseThrow(() -> new BookNotFoundException("No book found with ISBN " + isbn));
     }
 
@@ -91,7 +93,7 @@ public class BookService {
     }
 
     public void clearAll() {
-        repository.clear();
+        repository.deleteAll();
     }
 
     private static <T> T requireArgument(T value, String argumentName) {

@@ -4,10 +4,14 @@ import java.util.Objects;
 
 public class Book {
 
-    private final int ibsn;
+    private int ibsn;
     private String title;
     private String author;
     private int year;
+
+    public Book() {
+        // Requis pour la deserialisation JSON
+    }
 
     public Book(int ibsn, String title, String author, int year) {
         this.ibsn = ibsn;

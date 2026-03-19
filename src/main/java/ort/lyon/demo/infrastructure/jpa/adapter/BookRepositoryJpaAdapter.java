@@ -40,7 +40,11 @@ public class BookRepositoryJpaAdapter implements BookRepositoryPort {
 
     @Override
     public void save(Book book) {
-        repository.save(mapper.toEntity(book));
+        if (repository.existsByIbsn(book.getIbsn())) {
+            repository.updateByIbsn(book.getIbsn(), book.getTitle(), book.getAuthor(), book.getYear());
+        } else {
+            repository.save(mapper.toEntity(book));
+        }
     }
 
     @Override

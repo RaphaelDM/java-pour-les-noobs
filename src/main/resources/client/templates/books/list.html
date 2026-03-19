@@ -67,9 +67,43 @@
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author}"></td>
                     <td><span class="badge-year" th:text="${book.year}"></span></td>
-                    <td>
+                    <td class="actions-cell">
+                        <button class="btn-edit"
+                                th:onclick="'toggleEdit(' + ${book.ibsn} + ')'"
+                                type="button">Modifier</button>
                         <form style="display:inline" th:action="@{/ui/books/{isbn}/delete(isbn=${book.ibsn})}" method="post">
                             <button class="btn-delete" type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                <!-- Ligne d'édition inline -->
+                <tr class="edit-row" th:id="'edit-' + ${book.ibsn}" th:each="book : ${books}">
+                    <td colspan="5">
+                        <form class="edit-form"
+                              th:action="@{/ui/books/{isbn}/edit(isbn=${book.ibsn})}"
+                              method="post">
+                            <div class="edit-fields">
+                                <div class="form-group">
+                                    <label>Titre</label>
+                                    <input type="text" name="title" th:value="${book.title}"
+                                           minlength="1" maxlength="200" required />
+                                </div>
+                                <div class="form-group">
+                                    <label>Auteur</label>
+                                    <input type="text" name="author" th:value="${book.author}"
+                                           minlength="1" maxlength="100" required />
+                                </div>
+                                <div class="form-group">
+                                    <label>Année</label>
+                                    <input type="number" name="year" th:value="${book.year}"
+                                           min="1000" max="2026" required />
+                                </div>
+                                <div class="edit-actions">
+                                    <button class="btn-save" type="submit">✔ Enregistrer</button>
+                                    <button class="btn-cancel" type="button"
+                                            th:onclick="'toggleEdit(' + ${book.ibsn} + ')'">Annuler</button>
+                                </div>
+                            </div>
                         </form>
                     </td>
                 </tr>
@@ -84,6 +118,13 @@
 </main>
 
 <footer th:replace="~{components/footer :: footer}"></footer>
+
+<script>
+function toggleEdit(isbn) {
+    const row = document.getElementById('edit-' + isbn);
+    row.classList.toggle('open');
+}
+</script>
 
 </body>
 </html>

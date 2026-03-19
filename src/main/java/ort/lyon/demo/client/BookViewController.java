@@ -33,6 +33,12 @@ public class BookViewController {
         return "redirect:/ui/books";
     }
 
+    @PostMapping("/{isbn}/edit")
+    public String updateBook(@PathVariable int isbn, @ModelAttribute Book book) {
+        bookUseCase.updateBook(isbn, book);
+        return "redirect:/ui/books";
+    }
+
     @PostMapping("/{isbn}/delete")
     public String deleteBook(@PathVariable int isbn) {
         bookUseCase.removeBookByIsbn(isbn);

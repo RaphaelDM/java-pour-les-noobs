@@ -221,6 +221,60 @@ tbody tr:hover { background: #f8f9ff; }
     box-shadow: 0 2px 8px rgba(239,68,68,.25);
 }
 
+/* ── Edit button ── */
+.actions-cell { display: flex; gap: 6px; align-items: center; }
+.btn-edit {
+    padding: 6px 14px;
+    background: transparent;
+    color: var(--clr-primary);
+    border: 1.5px solid #c7d2fe;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+}
+.btn-edit:hover { background: var(--clr-primary-lt); border-color: var(--clr-primary); }
+
+/* ── Inline edit row ── */
+.edit-row { display: none; background: #fafbff; border-bottom: 2px solid #c7d2fe; }
+.edit-row.open { display: table-row; }
+.edit-form { padding: 16px 20px; }
+.edit-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 120px auto;
+    gap: 12px;
+    align-items: end;
+}
+.edit-actions { display: flex; gap: 8px; align-items: flex-end; padding-bottom: 1px; }
+.btn-save {
+    padding: 9px 16px;
+    background: var(--clr-success);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+    white-space: nowrap;
+}
+.btn-save:hover { background: var(--clr-success-dk); }
+.btn-cancel {
+    padding: 9px 14px;
+    background: transparent;
+    color: var(--clr-muted);
+    border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .15s;
+}
+.btn-cancel:hover { background: #f1f5f9; }
+
 /* ── Empty state ── */
 .empty-row td {
     text-align: center;

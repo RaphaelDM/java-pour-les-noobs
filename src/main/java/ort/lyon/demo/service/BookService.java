@@ -1,9 +1,11 @@
 package ort.lyon.demo.service;
 
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.domain.port.BookRepositoryPort;
 import ort.lyon.demo.domain.exception.BookNotFoundException;
 import ort.lyon.demo.domain.exception.DuplicateBookException;
+
+import ort.lyon.demo.domain.port.in.BookUseCase;
+import ort.lyon.demo.domain.port.out.BookRepositoryPort;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class BookService {
+public class BookService implements BookUseCase {
 
     private final BookRepositoryPort repository;
 
@@ -86,7 +88,6 @@ public class BookService {
                 .filter(book -> book.getTitle().toLowerCase().contains(needle))
                 .collect(Collectors.toCollection(java.util.LinkedHashSet::new));
     }
-
     public void removeBook(Book book) {
         requireArgument(book, "book");
         removeBookByIsbn(book.getIbsn());

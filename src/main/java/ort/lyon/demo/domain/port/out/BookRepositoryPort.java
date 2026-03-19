@@ -1,4 +1,4 @@
-package ort.lyon.demo.domain.port;
+package ort.lyon.demo.domain.port.out;
 
 import java.util.List;
 import java.util.Optional;

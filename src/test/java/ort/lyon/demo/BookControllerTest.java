@@ -2,7 +2,7 @@ package ort.lyon.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.service.BookService;
+import ort.lyon.demo.domain.port.in.BookUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class BookControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private BookService bookService;
+    private BookUseCase bookService;
 
     @Autowired
     private ObjectMapper objectMapper;

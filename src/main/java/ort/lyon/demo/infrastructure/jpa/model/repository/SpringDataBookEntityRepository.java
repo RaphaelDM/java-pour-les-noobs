@@ -1,8 +1,10 @@
-package ort.lyon.demo.infrastructure.jpa.repository;
+package ort.lyon.demo.infrastructure.jpa.model.repository;
 
 import java.util.Optional;
-import ort.lyon.demo.infrastructure.jpa.model.BookEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import ort.lyon.demo.infrastructure.jpa.model.entity.BookEntity;
 
 public interface SpringDataBookEntityRepository extends JpaRepository<BookEntity, Long> {
 

@@ -24,6 +24,10 @@ public class Book {
         return ibsn;
     }
 
+    public void setIbsn(int ibsn) {
+        this.ibsn = ibsn;
+    }
+
     public String getTitle() {
         return title;
     }

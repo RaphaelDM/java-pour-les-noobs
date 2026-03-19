@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.domain.port.BookRepositoryPort;
+import ort.lyon.demo.domain.port.out.BookRepositoryPort;
 import ort.lyon.demo.infrastructure.jpa.mapper.BookEntityMapper;
-import ort.lyon.demo.infrastructure.jpa.repository.SpringDataBookEntityRepository;
+import ort.lyon.demo.infrastructure.jpa.model.repository.SpringDataBookEntityRepository;
+
 import org.springframework.stereotype.Repository;
 
 @Repository

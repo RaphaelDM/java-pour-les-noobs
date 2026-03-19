@@ -1,7 +1,7 @@
 package ort.lyon.demo.api;
 
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.service.BookService;
+import ort.lyon.demo.domain.port.in.BookUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,9 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookService bookService;
+    private final BookUseCase bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookUseCase bookService) {
         this.bookService = bookService;
     }
 

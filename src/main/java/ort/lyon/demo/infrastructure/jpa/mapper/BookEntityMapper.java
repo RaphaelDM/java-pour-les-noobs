@@ -1,7 +1,8 @@
 package ort.lyon.demo.infrastructure.jpa.mapper;
 
 import ort.lyon.demo.domain.Book;
-import ort.lyon.demo.infrastructure.jpa.model.BookEntity;
+import ort.lyon.demo.infrastructure.jpa.model.entity.BookEntity;
+
 import org.springframework.stereotype.Component;
 
 @Component

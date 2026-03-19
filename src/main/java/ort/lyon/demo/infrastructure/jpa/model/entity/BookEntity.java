@@ -1,4 +1,4 @@
-package ort.lyon.demo.infrastructure.jpa.model;
+package ort.lyon.demo.infrastructure.jpa.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
